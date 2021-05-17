@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewpoint" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ 		<!-- Add icon library -->
+  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+			<title>GradeBook</title>
+	</head>
+
+	<body>
+		<nav class="navbar navbar-expand-sm bg-success navbar-dark fixed-top">
+         <div class="container-fluid">
+            <div class="navbar-header">
+			    <a class="navbar-brand p-3" href="http://pproject.pythonanywhere.com/mainpage/"> MyGradebook</a>
+            </div>
+
+            <div>
+               <ul class="navbar-nav navbar-right">
+                  <li class="nav-item active">
+                            {% if current_user.is_authenticated %}
+                                <li><a href="{{ url_for('logout') }} "style= "color:Snow;">Log out</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('login') }}" style= "color:Snow;">Log in</a></li>
+                            {% endif %}
+                    </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+
+		<div class="container-fluid"  style="padding-top: 100px">
+			<table class="table table-bordered table-sm">
+				<thead>
+					<tr class="table-active">
+						<th scope="col"> Student ID </th>
+						<th scope="col"> First Name </th>
+						<th scope="col"> Last Name </th>
+						<th scope="col"> Email </th>
+						<th scope="col"> Major </th>
+					</tr>
+				</thead>
+				<tbody>
+				    {% for students in students %}
+				    <tr>
+				        <td> {{ students.id }}</td>
+				        <td> {{ students.first_name }}</td>
+				        <td> {{ students.last_name }}</td>
+				        <td> {{ students.email }}</td>
+				        <td> {{ students.major }}</td>
+				    </tr>
+				    {% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<div class="container-fluid"  style="padding-top: 100px">
+		    <div class="row">
+		        <div class="col-md">
+		            <h5>Delete Student</h5>
+		            <form class="form-inline" action='/student_delete' method="POST">
+		                <input type="int" class="form-control mb-2 mr-sm-2" id="student_id" placeholder="Enter Student Id" name="student_id">
+		                <button type="submit" class="btn btn-danger ">Submit</button>
+		            </form>
+		        </div>
+
+		        <div class="col-md">
+		            <h5>Edit Student</h5>
+	            <form action='/mainpage/student_edit' method="POST">
+	                <div class="form-group m-3 w-50">
+	                    <input type="text" class="form-control" id="first_name" placeholder="Edit Student Id" name="student_id">
+      			    </div>
+		            <div class="form-group m-3 w-50">
+      				    <input type="text" class="form-control" id="first_name" placeholder="Edit First Name" name="first_name">
+      			    </div>
+    			    <div class="form-group m-3 w-50">
+     				    <input type="text" class="form-control" id="last_name" placeholder="Edit Last Name" name="last_name">
+     			    </div>
+     			    <div class="form-group m-3 w-50">
+      				    <input type="text" class="form-control" id="email" placeholder="Edit Email" name="email">
+      			    </div>
+    			    <div class="form-group m-3 w-50">
+     				    <input type="text" class="form-control" id="major" placeholder="Edit Student's Major" name="major">
+     			    </div>
+     			    <button type="submit" class="btn btn-warning btn-lg ">Edit Student</button>
+		            </form>
+		        </div>
+		    </div>
+		 </div>
