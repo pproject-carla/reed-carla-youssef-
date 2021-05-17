@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewpoint" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <!-- Add icon library -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <title>GradeBook</title>
+   </head>
+   <body>
+      <nav class="navbar navbar-expand-sm bg-success navbar-dark fixed-top">
+         <div class="container-fluid">
+            <div class="navbar-header">
+			    <a class="navbar-brand p-3" href="http://pproject.pythonanywhere.com/mainpage/"> MyGradebook</a>
+            </div>
+
+            <div>
+               <ul class="navbar-nav navbar-right">
+                  <li class="nav-item active">
+                            {% if current_user.is_authenticated %}
+                                <li><a href="{{ url_for('logout') }} "style= "color:Snow;">Log out</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('login') }}" style= "color:Snow;">Log in</a></li>
+                            {% endif %}
+                    </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+
+      <div class="container-fluid"  style="padding-top: 100px">
+			<table class="table table-bordered table-sm">
+				<thead>
+					<tr class="table-active">
+						<th scope="col"> Student Name</th>
+						<th scope="col"> Assigment 1 </th>
+						<th scope="col"> Assigment 2 </th>
+						<th scope="col"> Assigment 3 </th>
+						<th scope="col"> Assigment 4 </th>
+					</tr>
+				</thead>
+				<tbody>
+				    {% for n in grades %}
+				    <tr>
+				        <td> {{n.student.fullname}} </td>
+				        <td> {{n.assign1}} </td>
+				        <td> {{n.assign2}} </td>
+				        <td> {{n.assign3}} </td>
+				        <td> {{n.assign4}} </td>
+				    </tr>
+				    {% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<div class="container-fluid" style="padding-top: 100px">
+		    <div class="row">
+		        <div class="col">
+		            <h5> Enter in Student Grade </h5>
+            		    <form action="." method="POST">
+            		        <div class="form-group m-3 w-75">
+            		                <select name="s_name" id="s_name">
+            		                    {% for students in students %}
+            		                    <option value={{students.id}}>{{students.fullname}}</option>
+            		                    {% endfor %}
+            		                </select>
+                  			</div>
+
+                  			<div class="form-group m-3 w-75">
+                  				<input type="number" class="form-control" id="grade1" placeholder="Enter Assignment 1 Grade" name="grade1">
+                  				<input type="number" class="form-control" id="grade2" placeholder="Enter Assignment 2 Grade" name="grade2">
+                  				<input type="number" class="form-control" id="grade3" placeholder="Enter Assignment 3 Grade" name="grade3">
+                  				<input type="number" class="form-control" id="grade4" placeholder="Enter Assignment 4 Grade" name="grade4">
+                  			</div>
+                  			<button type="submit" class="btn btn-success btn-sm ">Add Grade</button>
+            		    </form>
+		        </div>
+		        <div class=col>
+		            <h5>Edit Grade</h5>
+		                <form action="/mainpage/grades/edit" method="POST">
+		                    <div class="form-group m-3 w-75">
+            		                <select name="s_name" id="s_name">
+            		                    {% for students in students %}
+            		                    <option value={{students.id}}>{{students.fullname}}</option>
+            		                    {% endfor %}
+            		                </select>
+                  			</div>
+
+                  			<div class="form-group m-3 w-75">
+                  				<input type="number" class="form-control" id="grade1" placeholder="Edit Assignment 1 Grade" name="grade1">
+                  				<input type="number" class="form-control" id="grade2" placeholder="Edit Assignment 2 Grade" name="grade2">
+                  				<input type="number" class="form-control" id="grade3" placeholder="Edit Assignment 3 Grade" name="grade3">
+                  				<input type="number" class="form-control" id="grade4" placeholder="Edit Assignment 4 Grade" name="grade4">
+                  			</div>
+                  			<button type="submit" class="btn btn-warning btn-sm ">Edit Grade</button>
+		                </form>
+		        </div>
+		    </div>
+
+		</div>
+   </body>
