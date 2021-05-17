@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewpoint" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <!-- Add icon library -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <title>GradeBook</title>
+      <nav class="navbar navbar-expand-sm bg-success navbar-dark fixed-top">
+         <div class="container-fluid">
+            <div class="navbar-header">
+			    <a class="navbar-brand p-3" href="http://pproject.pythonanywhere.com/mainpage/"> MyGradebook</a>
+            </div>
+
+            <div>
+               <ul class="navbar-nav navbar-right">
+                  <li class="nav-item active">
+                            {% if current_user.is_authenticated %}
+                                <li><a href="{{ url_for('logout') }} "style= "color:Snow;">Log out</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('login') }}" style= "color:Snow;">Log in</a></li>
+                            {% endif %}
+                    </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+      <div class="container-fluid" style="padding-top:100px;">
+      <div class=row>
+      <div class=col-2>
+         <nav class="nav flex-column">
+            <div class="dropdown">
+               <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded=False> Edit Students </button>
+               <div class="dropdown-menu">
+                  <a class="dropdown-item" href="edit_student"> Edit/Delete Student </a>
+                  <a class="dropdown-item" href="add_student"> Add student </a>
+               </div>
+            </div>
+
+            <div style="padding-top:25px;">
+                <a href="grades" class="btn btn-success" role="button" aria-pressed="true">Add/Edit Grade</a>
+            </div>
+         </nav>
+      </div>
+      <div class="col-10">
+         <h3> Gradebook: Class 1 </h3>
+         <div class="container  table-responsive ">
+            <table class="table table-bordered table-striped m-3" style="margin-top:90px">
+               <thead class = "bg-success">
+                  <tr>
+                     <th>Student ID</th>
+                     <th>Firstname</th>
+                     <th>Lastname</th>
+                     <th>Assignment 1</th>
+                     <th>Assigment 2</th>
+                     <th>Assignment 3</th>
+                     <th>Assignment 4</th>
+                     <th>Average Grade</th>
+                  </tr>
+               </thead>
+               <tbody class="table-success">
+                  <tr>
+                     <td>
+                        {% for n in results%}
+                        <div class="container m-2 p-2">
+                           <ul class="list-group">
+                              <li class="list-group-item">{{n.student.id}}</li>
+                           </ul>
+                        </div>
+                        {% endfor %}
+                     </td>
+                     <td>
+                        {% for n in results%}
+                        <div class="container m-2 p-2">
+                           <ul class="list-group">
+                              <li class="list-group-item">{{n.student.first_name}}</li>
+                           </ul>
+                        </div>
+                        {% endfor %}
+                     </td>
+                     <td>
+                        {% for n in results%}
+                        <div class="container m-2 p-2">
+                           <ul class="list-group">
+                              <li class="list-group-item">{{n.student.last_name}}</li>
+                           </ul>
+                        </div>
+                        {% endfor %}
+                     </td>
+                     <td>
+                        {% for n in results%}
+                        <div class="container m-2 p-2">
+                           <ul class="list-group">
+                              <li class="list-group-item">{{n.assign1}}</li>
+                           </ul>
+                        </div>
+                        {% endfor %}
+                     </td>
+                     <td>
+                        {% for n in results%}
+                        <div class="container m-2 p-2">
+                           <ul class="list-group">
+                              <li class="list-group-item">{{n.assign2}}</li>
+                           </ul>
+                        </div>
+                        {% endfor %}
+                     </td>
+                     <td>
+                        {% for n in results%}
+                        <div class="container m-2 p-2">
+                           <ul class="list-group">
+                              <li class="list-group-item">{{n.assign3}}</li>
+                           </ul>
+                        </div>
+                        {% endfor %}
+                     </td>
+                     <td>
+                        {% for n in results%}
+                        <div class="container m-2 p-2">
+                           <ul class="list-group">
+                              <li class="list-group-item">{{n.assign4}}</li>
+                           </ul>
+                        </div>
+                        {% endfor %}
+                     </td>
+                     <td>
+                        {% for n in results %}
+                        <div class="container m-2 p-2">
+                           <ul class="list-group">
+                              <li class="list-group-item">{{(n.assign1|float+n.assign2|float+n.assign3|float+n.assign4|float)/4}}</li>
+                           </ul>
+                        </div>
+                        {% endfor %}
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </body>
+</html>
